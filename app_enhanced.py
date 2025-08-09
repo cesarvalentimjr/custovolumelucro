@@ -51,7 +51,7 @@ st.markdown("---")
 
 # Sidebar para entrada de dados
 st.sidebar.image(
-    "https://raw.githubusercontent.com/SEU_USUARIO/SEU_REPOSITORIO/refs/heads/main/dicelestelogo.jpg",
+    "https://github.com/cesarvalentimjr/custovolumelucro/blob/main/dicelestelogo.jpg?raw=true",
     use_container_width=True
 )
 st.sidebar.header("📊 Configurações e Dados de Entrada")
