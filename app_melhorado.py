@@ -145,13 +145,13 @@ st.sidebar.header("📊 Configurações e Dados de Entrada")
 st.sidebar.subheader("📁 Upload de Dados")
 
 # Botão para download do template
-with open('/home/ubuntu/streamlit_app/template_planilha.xlsx', 'rb') as template_file:
-    st.sidebar.download_button(
-        label="📥 Baixar Planilha Template",
-        data=template_file.read(),
-        file_name="template_cafeteria.xlsx",
-        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-    )
+#with open('/home/ubuntu/streamlit_app/template_planilha.xlsx', 'rb') as template_file:
+   # st.sidebar.download_button(
+       # label="📥 Baixar Planilha Template",
+       # data=template_file.read(),
+       # file_name="template_cafeteria.xlsx",
+      #  mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+   # )
 
 # Upload de arquivo
 uploaded_file = st.sidebar.file_uploader(
