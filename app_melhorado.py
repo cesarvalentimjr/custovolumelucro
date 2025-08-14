@@ -160,6 +160,14 @@ uploaded_file = st.sidebar.file_uploader(
     help="Use a planilha template baixada acima"
 )
 
+# Campo para alíquota do SIMPLES
+st.sidebar.subheader("💸 Tributação SIMPLES")
+tax_rate = st.sidebar.number_input(
+    "% Alíquota Efetiva (SIMPLES)",
+    min_value=0.0, max_value=30.0, value=0.0, step=0.1,
+    help="Percentual efetivo de tributação sobre a receita"
+)
+
 # Seção para dados de produtos
 st.sidebar.subheader("🍰 Dados dos Produtos")
 
@@ -245,7 +253,7 @@ fixed_costs = st.sidebar.number_input("Custos Fixos Totais (R$/mês)", min_value
 
 # Inicializar analisador financeiro
 if product_data:
-    analyzer = FinancialAnalyzer(product_data, fixed_costs)
+    analyzer = FinancialAnalyzer(product_data, fixed_costs, tax_rate)
     cvp_analysis = analyzer.get_cost_volume_profit_analysis()
     contribution_analysis = analyzer.get_contribution_margin_analysis()
 
@@ -645,4 +653,6 @@ if product_data and not contribution_analysis.empty:
 st.markdown("---")
 st.markdown("**💡 Desenvolvido para otimização de lucratividade de cafeterias** ☕")
 st.markdown("*Use as análises para tomar decisões estratégicas baseadas em dados!*")
+
+
 
