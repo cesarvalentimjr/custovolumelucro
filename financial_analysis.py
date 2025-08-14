@@ -11,7 +11,7 @@ from typing import List, Dict, Tuple
 class FinancialAnalyzer:
     """Classe para análise financeira de produtos de cafeteria"""
     
-    def __init__(self, products_data: List[Dict], fixed_costs: float):
+    def __init__(self, products_data: List[Dict], fixed_costs: float, tax_rate: float = 0.0):
         """
         Inicializa o analisador financeiro
         
@@ -21,6 +21,7 @@ class FinancialAnalyzer:
         """
         self.products_data = products_data
         self.fixed_costs = fixed_costs
+        self.tax_rate = tax_rate
         self.df = pd.DataFrame(products_data)
         self._calculate_metrics()
     
@@ -28,11 +29,16 @@ class FinancialAnalyzer:
         """Calcula métricas básicas para cada produto"""
         if len(self.df) > 0:
             self.df['contribution_margin'] = self.df['price'] - self.df['cost']
+            # Calcular imposto sobre receita
+            self.df['tax'] = self.df['price'] * (self.tax_rate / 100)
+            self.df['total_tax'] = self.df['tax'] * self.df['quantity']
+            # Ajustar margem de contribuição considerando impostos
+            self.df['contribution_margin'] = self.df['price'] - self.df['cost'] - self.df['tax']
             self.df['contribution_margin_percent'] = (
                 (self.df['contribution_margin'] / self.df['price']) * 100
             ).fillna(0)
             self.df['total_revenue'] = self.df['price'] * self.df['quantity']
-            self.df['total_variable_cost'] = self.df['cost'] * self.df['quantity']
+            self.df['total_variable_cost'] = (self.df['cost'] + self.df['tax']) * self.df['quantity']
             self.df['total_contribution'] = self.df['contribution_margin'] * self.df['quantity']
     
     def get_contribution_margin_analysis(self) -> pd.DataFrame:
@@ -264,4 +270,6 @@ class FinancialAnalyzer:
             'discount_applied': discount_percent,
             'viability': 'Viável' if combo_margin_percent > 15 else 'Revisar' if combo_margin_percent > 5 else 'Não recomendado'
         }
+
+
 
